@@ -14,11 +14,11 @@ public class ErrorResponse {
     private int code;
     private String message;
 
-    public static ResponseEntity<ErrorResponse> toResponseEntity(int code, String message) {
+    public static ResponseEntity<ErrorResponse> toResponseEntity(HttpStatus status, String message) {
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(status)
                 .body(ErrorResponse.builder()
-                        .code(code)
+                        .code(status.value())
                         .message(message)
                         .build());
     }
