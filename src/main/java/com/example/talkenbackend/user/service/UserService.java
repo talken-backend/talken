@@ -15,4 +15,11 @@ public class UserService {
 
         return UserResponseDto.fromEntity(user);
     }
+
+    public boolean checkEmailDuplicate(String email) {
+        if(userRepository.findByEmail(email).isPresent()){
+            return true; // 중복
+        }
+        return false; // 중복X
+    }
 }

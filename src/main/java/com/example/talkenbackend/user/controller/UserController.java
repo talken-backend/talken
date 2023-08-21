@@ -16,8 +16,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{userId}")
-    public UserResponseDto user(@PathVariable Long userId) throws Exception {
+    public UserResponseDto getUserInfo(@PathVariable Long userId) throws Exception {
         return userService.getUserInfo(userId);
     }
 
+    @GetMapping("/signup/{email}")
+    public boolean checkEmailDuplicate(@PathVariable String email) {
+        return userService.checkEmailDuplicate(email);
+    }
 }
