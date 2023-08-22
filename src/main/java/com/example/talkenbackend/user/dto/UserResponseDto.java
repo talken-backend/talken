@@ -10,12 +10,22 @@ public class UserResponseDto {
     private Long id;
     private String email;
     private String username;
+    private String phone;
+    private String introCaption;
+    private String category;
+    private String position;
+    private String profilePath;
 
     public static UserResponseDto fromEntity(User user) {
         return UserResponseDto.builder()
                 .id(user.getId())
-                .username(user.getUsername())
                 .email(user.getEmail())
+                .username(user.getUsername())
+                .phone(user.getPhone())
+                .phone(user.getIntroCaption())
+                .phone(user.getCategory())
+                .phone(user.getPosition())
+                .phone(user.getProfilePath())
                 .build();
     }
 }
