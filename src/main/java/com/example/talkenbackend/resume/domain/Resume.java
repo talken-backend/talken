@@ -15,4 +15,16 @@ public class Resume {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Embedded
+    private Profile profile;
+
+    @Embedded
+    private Keywords keywords;
+
+    @Builder
+    public Resume(final Profile profile, final Keywords keywords) {
+        this.profile = profile;
+        this.keywords = keywords;
+    }
+
 }
