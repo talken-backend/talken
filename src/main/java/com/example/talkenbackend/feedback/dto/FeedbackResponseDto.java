@@ -12,12 +12,15 @@ public class FeedbackResponseDto {
     private Long menteeId;
     private Long portfolioId;
 
+    private String content;
+
     public static FeedbackResponseDto fromEntity(Feedback feedback) {
         return FeedbackResponseDto.builder()
                 .id(feedback.getId())
                 .mentorId(feedback.getMentorId())
                 .menteeId(feedback.getMenteeId())
                 .portfolioId(feedback.getPortfolioId())
+                .content(feedback.getContent())
                 .build();
     }
 }

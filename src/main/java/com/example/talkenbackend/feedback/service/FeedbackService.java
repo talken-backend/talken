@@ -1,6 +1,7 @@
 package com.example.talkenbackend.feedback.service;
 
 import com.example.talkenbackend.feedback.domain.Feedback;
+import com.example.talkenbackend.feedback.dto.FeedbackRequestDto;
 import com.example.talkenbackend.feedback.dto.FeedbackResponseDto;
 import com.example.talkenbackend.feedback.repository.FeedbackRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,20 @@ public class FeedbackService {
         return feedbackRepository.findByMentorId(mentorId).orElseThrow(() -> new Exception())
                 .stream().map(x -> fromEntity(x)).collect(Collectors.toList());
 
+    }
+
+    public void deleteFeedback(Long feedbackId) {
+        feedbackRepository.deleteById(feedbackId);
+    }
+
+    public FeedbackResponseDto createFeedback(FeedbackRequestDto dto) {
+        Feedback feedback = Feedback.builder()
+                .portfolioId(dto.getPortfolioId())
+                .menteeId(dto.getMenteeId())
+                .mentorId(dto.getMentorId())
+                .content(dto.getContent())
+                .build();
+
+        return fromEntity(feedbackRepository.save(feedback));
     }
 }
