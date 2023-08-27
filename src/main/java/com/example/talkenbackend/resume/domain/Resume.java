@@ -15,4 +15,12 @@ public class Resume {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Embedded
+    private Profile profile;
+
+    @Builder
+    public Resume(final Profile profile) {
+        this.profile = profile;
+    }
+
 }
