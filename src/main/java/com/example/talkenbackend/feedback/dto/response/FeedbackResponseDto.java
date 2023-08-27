@@ -1,4 +1,4 @@
-package com.example.talkenbackend.feedback.dto;
+package com.example.talkenbackend.feedback.dto.response;
 
 import com.example.talkenbackend.feedback.domain.Feedback;
 import lombok.Builder;

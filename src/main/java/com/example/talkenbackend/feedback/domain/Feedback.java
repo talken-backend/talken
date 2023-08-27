@@ -1,6 +1,6 @@
 package com.example.talkenbackend.feedback.domain;
 
-import com.example.talkenbackend.feedback.dto.FeedbackRequestDto;
+import com.example.talkenbackend.feedback.dto.request.FeedbackRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

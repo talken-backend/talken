@@ -1,7 +1,7 @@
 package com.example.talkenbackend.feedback.controller;
 
-import com.example.talkenbackend.feedback.dto.FeedbackRequestDto;
-import com.example.talkenbackend.feedback.dto.FeedbackResponseDto;
+import com.example.talkenbackend.feedback.dto.request.FeedbackRequestDto;
+import com.example.talkenbackend.feedback.dto.response.FeedbackResponseDto;
 import com.example.talkenbackend.feedback.service.FeedbackService;
 import com.example.talkenbackend.global.response.SuccessResponse;
 import lombok.RequiredArgsConstructor;

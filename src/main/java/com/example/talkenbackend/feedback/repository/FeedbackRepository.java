@@ -1,7 +1,6 @@
 package com.example.talkenbackend.feedback.repository;
 
 import com.example.talkenbackend.feedback.domain.Feedback;
-import com.example.talkenbackend.feedback.dto.FeedbackResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
