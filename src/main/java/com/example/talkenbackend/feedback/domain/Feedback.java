@@ -1,11 +1,18 @@
 package com.example.talkenbackend.feedback.domain;
 
+import com.example.talkenbackend.feedback.dto.request.FeedbackRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Entity
 public class Feedback {
@@ -19,5 +26,10 @@ public class Feedback {
     @Column(nullable = false)
     private Long portfolioId;
 
+    private String content;
 
+
+    public void update(FeedbackRequestDto dto) {
+        this.content = dto.getContent();
+    }
 }
