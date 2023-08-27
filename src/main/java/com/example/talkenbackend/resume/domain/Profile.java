@@ -29,8 +29,7 @@ public class Profile {
     private String introduction;
 
 
-    public Profile(final String image, final String field, final String position, final String introduction,
-                   final List<Keyword> keywords) {
+    public Profile(final String image, final String field, final String position, final String introduction) {
         this.image = image;
         this.field = field;
         this.position = position;
