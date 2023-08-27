@@ -1,5 +1,6 @@
 package com.example.talkenbackend.user.domain;
 
+import com.example.talkenbackend.tag.domain.Tag;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Email;

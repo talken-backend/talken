@@ -18,13 +18,9 @@ public class Resume {
     @Embedded
     private Profile profile;
 
-    @Embedded
-    private Keywords keywords;
-
     @Builder
-    public Resume(final Profile profile, final Keywords keywords) {
+    public Resume(final Profile profile) {
         this.profile = profile;
-        this.keywords = keywords;
     }
 
 }
