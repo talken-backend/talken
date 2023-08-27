@@ -3,9 +3,11 @@ package com.example.talkenbackend.feedback.service;
 import com.example.talkenbackend.feedback.domain.Feedback;
 import com.example.talkenbackend.feedback.dto.FeedbackRequestDto;
 import com.example.talkenbackend.feedback.dto.FeedbackResponseDto;
+import com.example.talkenbackend.feedback.exception.FeedbackNotFoundException;
 import com.example.talkenbackend.feedback.repository.FeedbackRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +21,8 @@ public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
 
     public FeedbackResponseDto getFeedback(Long feedbackId) throws Exception {
-        Feedback feedback = feedbackRepository.findById(feedbackId).orElseThrow(() -> new Exception());
+        Feedback feedback = feedbackRepository.findById(feedbackId)
+                .orElseThrow(() -> new FeedbackNotFoundException(feedbackId));
         return fromEntity(feedback);
     }
 
@@ -35,6 +38,7 @@ public class FeedbackService {
 
     }
 
+    @Transactional
     public void deleteFeedback(Long feedbackId) {
         feedbackRepository.deleteById(feedbackId);
     }
@@ -48,5 +52,17 @@ public class FeedbackService {
                 .build();
 
         return fromEntity(feedbackRepository.save(feedback));
+    }
+
+    @Transactional
+    public FeedbackResponseDto updateFeedback(Long feedbackId, FeedbackRequestDto dto) {
+        Feedback feedback = feedbackRepository.findById(feedbackId).orElseThrow(
+                () -> new FeedbackNotFoundException(feedbackId)
+        );
+
+        feedback.update(dto);
+//        Feedback save = feedbackRepository.save(feedback);
+
+        return fromEntity(feedback);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.talkenbackend.feedback.domain;
 
+import com.example.talkenbackend.feedback.dto.FeedbackRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,4 +29,7 @@ public class Feedback {
     private String content;
 
 
+    public void update(FeedbackRequestDto dto) {
+        this.content = dto.getContent();
+    }
 }
