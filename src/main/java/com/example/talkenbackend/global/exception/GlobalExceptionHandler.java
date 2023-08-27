@@ -37,6 +37,13 @@ public class GlobalExceptionHandler {
         return ErrorResponse.toResponseEntity(HttpStatus.FORBIDDEN, ErrorCode.ACCESS_DENIED.getMessage());
     }
 
+    @ExceptionHandler(CustomException.class)
+    protected ResponseEntity<ErrorResponse> handleCustomException(final CustomException e) {
+        log.error("handleCustomException", e);
+        final ErrorCode code = e.getCode();
+        return ErrorResponse.toResponseEntity(code.getStatus(), code.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
