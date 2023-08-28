@@ -7,7 +7,6 @@ import com.example.talkenbackend.oauth.dto.response.OAuthInfoResponse;
 import com.example.talkenbackend.oauth.jwt.AuthTokens;
 import com.example.talkenbackend.oauth.jwt.AuthTokensGenerator;
 import com.example.talkenbackend.oauth.repository.SocialLoginUserRepository;
-import com.example.talkenbackend.user.service.RequestOAuthInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
