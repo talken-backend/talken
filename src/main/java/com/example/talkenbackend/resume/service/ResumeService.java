@@ -8,12 +8,17 @@ import com.example.talkenbackend.resume.dto.request.ResumeRequestDto;
 import com.example.talkenbackend.resume.dto.response.ResumeCreateResponseDto;
 import com.example.talkenbackend.resume.dto.response.ResumeDetailResponseDto;
 import com.example.talkenbackend.resume.dto.response.ResumeResponseDto;
+import com.example.talkenbackend.resume.dto.response.ResumeTagResponseDto;
 import com.example.talkenbackend.resume.exception.NotValidKeywordException;
 import com.example.talkenbackend.resume.exception.ResumeNotFoundException;
 import com.example.talkenbackend.tag.dto.TagCreateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +57,11 @@ public class ResumeService {
         ResumeResponseDto resumeResponse = ResumeResponseDto.fromEntity(resume);
         //TODO: UserResponseDto 추가
 
-        return ResumeDetailResponseDto.fromEntity(resumeResponse);
+        List<ResumeTag> tagList = resumeTagRepository.findByResumeId(resumeId);
+        List<ResumeTagResponseDto> resumeTagResponse = tagList.stream()
+                .map(ResumeTagResponseDto::fromEntity)
+                .collect(Collectors.toList());
+
+        return ResumeDetailResponseDto.fromEntity(resumeResponse, resumeTagResponse);
     }
 }
