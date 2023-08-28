@@ -6,7 +6,10 @@ import com.example.talkenbackend.resume.domain.repository.ResumeRepository;
 import com.example.talkenbackend.resume.domain.repository.ResumeTagRepository;
 import com.example.talkenbackend.resume.dto.request.ResumeRequestDto;
 import com.example.talkenbackend.resume.dto.response.ResumeCreateResponseDto;
+import com.example.talkenbackend.resume.dto.response.ResumeDetailResponseDto;
+import com.example.talkenbackend.resume.dto.response.ResumeResponseDto;
 import com.example.talkenbackend.resume.exception.NotValidKeywordException;
+import com.example.talkenbackend.resume.exception.ResumeNotFoundException;
 import com.example.talkenbackend.tag.dto.TagCreateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,5 +41,17 @@ public class ResumeService {
             resumeTagRepository.save(resumeTag);
         }
         return ResumeCreateResponseDto.fromEntity(resume);
+    }
+
+    @Transactional(readOnly = true)
+    public ResumeDetailResponseDto getResume(Long resumeId) {
+        Resume resume = resumeRepository.findById(resumeId).orElseThrow(
+                () -> new ResumeNotFoundException(resumeId)
+        );
+
+        ResumeResponseDto resumeResponse = ResumeResponseDto.fromEntity(resume);
+        //TODO: UserResponseDto 추가
+
+        return ResumeDetailResponseDto.fromEntity(resumeResponse);
     }
 }
