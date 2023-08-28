@@ -1,7 +1,7 @@
 package com.example.talkenbackend.user.controller;
 
 
-import com.example.talkenbackend.user.dto.UserResponseDto;
+import com.example.talkenbackend.user.dto.response.UserResponseDto;
 import com.example.talkenbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

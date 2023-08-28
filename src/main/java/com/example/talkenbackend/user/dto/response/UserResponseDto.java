@@ -1,4 +1,4 @@
-package com.example.talkenbackend.user.dto;
+package com.example.talkenbackend.user.dto.response;
 
 import com.example.talkenbackend.user.domain.User;
 import lombok.Builder;
