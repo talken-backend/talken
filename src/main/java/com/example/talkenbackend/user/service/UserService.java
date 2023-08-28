@@ -1,7 +1,7 @@
 package com.example.talkenbackend.user.service;
 
 import com.example.talkenbackend.user.domain.User;
-import com.example.talkenbackend.user.dto.UserResponseDto;
+import com.example.talkenbackend.user.dto.response.UserResponseDto;
 import com.example.talkenbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
