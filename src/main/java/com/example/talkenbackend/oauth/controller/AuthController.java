@@ -1,5 +1,6 @@
 package com.example.talkenbackend.oauth.controller;
 
+import com.example.talkenbackend.global.response.SuccessResponse;
 import com.example.talkenbackend.oauth.dto.request.param.KakaoLoginParams;
 import com.example.talkenbackend.oauth.dto.request.param.NaverLoginParams;
 import com.example.talkenbackend.oauth.jwt.AuthTokens;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.example.talkenbackend.global.response.SuccessResponse.toResponseEntity;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -20,12 +23,12 @@ public class AuthController {
     private final NaverLoginServiceImpl naverLoginService;
 
     @PostMapping("/kakao")
-    public ResponseEntity<AuthTokens> loginKakao(@RequestBody KakaoLoginParams params) {
-        return ResponseEntity.ok(kakaoLoginService.login(params));
+    public ResponseEntity<SuccessResponse<ResponseEntity<AuthTokens>>> loginKakao(@RequestBody KakaoLoginParams params) {
+        return toResponseEntity("카카오 로그인 성공", ResponseEntity.ok(kakaoLoginService.login(params)));
     }
 
     @PostMapping("/naver")
-    public ResponseEntity<AuthTokens> loginNaver(@RequestBody NaverLoginParams params) {
-        return ResponseEntity.ok(naverLoginService.login(params));
+    public ResponseEntity<SuccessResponse<ResponseEntity<AuthTokens>>> loginNaver(@RequestBody NaverLoginParams params) {
+        return toResponseEntity("네이버 로그인 성공", ResponseEntity.ok(naverLoginService.login(params)));
     }
 }
