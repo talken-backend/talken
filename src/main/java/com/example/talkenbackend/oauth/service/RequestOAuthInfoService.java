@@ -1,4 +1,4 @@
-package com.example.talkenbackend.user.service;
+package com.example.talkenbackend.oauth.service;
 
 import com.example.talkenbackend.oauth.dto.request.client.OAuthApiClient;
 import com.example.talkenbackend.oauth.dto.response.OAuthInfoResponse;
