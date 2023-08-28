@@ -24,13 +24,12 @@ public class SuccessResponse<T> {
                         .build());
     }
 
-    public static <T> ResponseEntity<SuccessResponse<T>> toResponseEntity(String message) {
+    public static <T> ResponseEntity<SuccessResponse<T>> toResponseEntity(T data) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.<T>builder()
                         .code(HttpStatus.OK.value())
-                        .message(message)
-                        .data(null)
+                        .data(data)
                         .build());
     }
 
