@@ -23,12 +23,12 @@ public class AuthController {
     private final NaverLoginServiceImpl naverLoginService;
 
     @PostMapping("/kakao")
-    public ResponseEntity<SuccessResponse<ResponseEntity<AuthTokens>>> loginKakao(@RequestBody KakaoLoginParams params) {
-        return toResponseEntity("카카오 로그인 성공", ResponseEntity.ok(kakaoLoginService.login(params)));
+    public ResponseEntity<SuccessResponse<AuthTokens>> loginKakao(@RequestBody KakaoLoginParams params) throws Exception {
+        return toResponseEntity("카카오 로그인 성공", kakaoLoginService.login(params));
     }
 
     @PostMapping("/naver")
-    public ResponseEntity<SuccessResponse<ResponseEntity<AuthTokens>>> loginNaver(@RequestBody NaverLoginParams params) {
-        return toResponseEntity("네이버 로그인 성공", ResponseEntity.ok(naverLoginService.login(params)));
+    public ResponseEntity<SuccessResponse<AuthTokens>> loginNaver(@RequestBody NaverLoginParams params) {
+        return toResponseEntity("네이버 로그인 성공", naverLoginService.login(params));
     }
 }

@@ -9,6 +9,7 @@ import com.example.talkenbackend.oauth.jwt.AuthTokensGenerator;
 import com.example.talkenbackend.oauth.repository.SocialLoginUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class NaverLoginServiceImpl implements OAuthLoginService {
                 .orElseGet(() -> newMember(oAuthInfoResponse));
     }
 
-
+    @Transactional
     public Long newMember(OAuthInfoResponse oAuthInfoResponse) {
         SocialLoginUser member = SocialLoginUser.builder()
                 .email(oAuthInfoResponse.getEmail())

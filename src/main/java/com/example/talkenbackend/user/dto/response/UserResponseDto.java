@@ -14,7 +14,7 @@ public class UserResponseDto {
     private String introCaption;
     private String category;
     private String position;
-    private String profilePath;
+    private String profileImageUrl;
 
     public static UserResponseDto fromEntity(User user) {
         return UserResponseDto.builder()
@@ -22,10 +22,10 @@ public class UserResponseDto {
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .phone(user.getPhone())
-                .phone(user.getIntroCaption())
-                .phone(user.getCategory())
-                .phone(user.getPosition())
-                .phone(user.getProfilePath())
+                .introCaption(user.getIntroCaption())
+                .category(user.getCategory())
+                .position(user.getPosition())
+                .profileImageUrl(user.getProfileImageUrl())
                 .build();
     }
 }

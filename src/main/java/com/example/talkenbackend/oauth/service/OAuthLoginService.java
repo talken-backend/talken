@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface OAuthLoginService {
-    AuthTokens login(OAuthLoginParams params);
+    AuthTokens login(OAuthLoginParams params) throws Exception;
 
     Long findOrCreateMember(OAuthInfoResponse oAuthInfoResponse);
 

@@ -2,6 +2,7 @@ package com.example.talkenbackend.oauth.dto.response;
 
 import com.example.talkenbackend.oauth.domain.SocialLoginUser;
 import com.example.talkenbackend.oauth.dto.enums.OAuthProvider;
+import com.example.talkenbackend.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -23,6 +24,14 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
                 .phoneNumber(this.getPhoneNumber())
                 .gender(this.getGender())
                 .isDefaultImage(this.getIsDefaultImage())
+                .build();
+    }
+
+    public User toUser() {
+        return User.builder()
+                .email(this.getEmail())
+                .profileImageUrl(this.getProfileImageUrl())
+                .username(this.getNickname()) // 닉네임을 이름으로 설정
                 .build();
     }
 
