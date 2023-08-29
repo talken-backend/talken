@@ -4,6 +4,7 @@ import com.example.talkenbackend.global.response.SuccessResponse;
 import com.example.talkenbackend.resume.dto.request.ResumeRequestDto;
 import com.example.talkenbackend.resume.dto.response.ResumeCreateResponseDto;
 import com.example.talkenbackend.resume.dto.response.ResumeDetailResponseDto;
+import com.example.talkenbackend.resume.dto.response.ResumeUpdateResponseDto;
 import com.example.talkenbackend.resume.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,11 @@ public class ResumeController {
     @GetMapping(value = "/api/resumes/{resumeId}")
     public ResponseEntity<SuccessResponse<ResumeDetailResponseDto>> getResume(@PathVariable Long resumeId) {
         return SuccessResponse.toResponseEntity(resumeService.getResume(resumeId));
+    }
+
+    @PutMapping(value = "/api/resumes/{resumeId}")
+    public ResponseEntity<SuccessResponse<ResumeUpdateResponseDto>> updateResume(@PathVariable Long resumeId,
+                                                                                 @RequestBody ResumeRequestDto resumeRequest) {
+        return SuccessResponse.toResponseEntity("이력서 수정 성공", resumeService.updateResume(resumeId, resumeRequest));
     }
 }

@@ -5,13 +5,12 @@ import com.example.talkenbackend.resume.domain.ResumeTag;
 import com.example.talkenbackend.resume.domain.repository.ResumeRepository;
 import com.example.talkenbackend.resume.domain.repository.ResumeTagRepository;
 import com.example.talkenbackend.resume.dto.request.ResumeRequestDto;
-import com.example.talkenbackend.resume.dto.response.ResumeCreateResponseDto;
-import com.example.talkenbackend.resume.dto.response.ResumeDetailResponseDto;
-import com.example.talkenbackend.resume.dto.response.ResumeResponseDto;
-import com.example.talkenbackend.resume.dto.response.ResumeTagResponseDto;
+import com.example.talkenbackend.resume.dto.response.*;
 import com.example.talkenbackend.resume.exception.NotValidKeywordException;
 import com.example.talkenbackend.resume.exception.ResumeNotFoundException;
-import com.example.talkenbackend.tag.dto.TagCreateRequestDto;
+import com.example.talkenbackend.tag.domain.Tag;
+import com.example.talkenbackend.tag.domain.repository.TagRepository;
+import com.example.talkenbackend.tag.dto.TagRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,13 +25,13 @@ public class ResumeService {
 
     private final ResumeRepository resumeRepository;
     private final ResumeTagRepository resumeTagRepository;
+    private final TagRepository tagRepository;
 
-    @Transactional
     public ResumeCreateResponseDto createResume(ResumeRequestDto resumeRequest) {
         Resume resume = resumeRequest.toEntity();
         resumeRepository.save(resume);
 
-        for(TagCreateRequestDto tagRequest : resumeRequest.getTags()) {
+        for(TagRequestDto tagRequest : resumeRequest.getTags()) {
             ResumeTag resumeTag = ResumeTag.builder()
                     .resume(resume)
                     .tag(tagRequest.toEntity())
@@ -50,9 +49,7 @@ public class ResumeService {
 
     @Transactional(readOnly = true)
     public ResumeDetailResponseDto getResume(Long resumeId) {
-        Resume resume = resumeRepository.findById(resumeId).orElseThrow(
-                () -> new ResumeNotFoundException(resumeId)
-        );
+        Resume resume = checkResumeExists(resumeId);
 
         ResumeResponseDto resumeResponse = ResumeResponseDto.fromEntity(resume);
         //TODO: UserResponseDto 추가
@@ -63,5 +60,36 @@ public class ResumeService {
                 .collect(Collectors.toList());
 
         return ResumeDetailResponseDto.fromEntity(resumeResponse, resumeTagResponse);
+    }
+
+    @Transactional
+    public ResumeUpdateResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest) {
+        Resume resume = checkResumeExists(resumeId);
+        resume.update(resumeRequest);
+
+        List<ResumeTag> savedResumeTags = resumeTagRepository.findByResumeId(resumeId);
+        List<Tag> savedTags = savedResumeTags.stream()
+                .map(resumeTag -> resumeTag.getTag())
+                .collect(Collectors.toList());
+
+        //TODO: 리팩토링할 것
+        savedResumeTags.forEach(resumeTag -> resumeTagRepository.deleteByResumeId(resumeId));
+        savedTags.forEach(tag -> tagRepository.deleteById(tag.getId()));
+
+        for(TagRequestDto tagRequest : resumeRequest.getTags()) {
+            ResumeTag newResumeTag = ResumeTag.builder()
+                    .resume(resume)
+                    .tag(tagRequest.toEntity())
+                    .build();
+            resumeTagRepository.save(newResumeTag);
+        }
+
+        return ResumeUpdateResponseDto.fromEntity(resume);
+    }
+
+    private Resume checkResumeExists(Long resumeId) {
+        return resumeRepository.findById(resumeId).orElseThrow(
+                () -> new ResumeNotFoundException(resumeId)
+        );
     }
 }
