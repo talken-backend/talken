@@ -31,4 +31,10 @@ public class ResumeController {
                                                                                  @RequestBody ResumeRequestDto resumeRequest) {
         return SuccessResponse.toResponseEntity("이력서 수정 성공", resumeService.updateResume(resumeId, resumeRequest));
     }
+
+    @DeleteMapping(value = "/api/resumes/{resumeId}")
+    public ResponseEntity<SuccessResponse<Void>> deleteResume(@PathVariable Long resumeId) {
+        resumeService.deleteResume(resumeId);
+        return SuccessResponse.toResponseEntity("이력서 삭제 성공");
+    }
 }

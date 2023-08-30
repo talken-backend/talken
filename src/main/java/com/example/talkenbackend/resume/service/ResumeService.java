@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,14 +66,8 @@ public class ResumeService {
         Resume resume = checkResumeExists(resumeId);
         resume.update(resumeRequest);
 
-        List<ResumeTag> savedResumeTags = resumeTagRepository.findByResumeId(resumeId);
-        List<Tag> savedTags = savedResumeTags.stream()
-                .map(resumeTag -> resumeTag.getTag())
-                .collect(Collectors.toList());
-
         //TODO: 리팩토링할 것
-        savedResumeTags.forEach(resumeTag -> resumeTagRepository.deleteByResumeId(resumeId));
-        savedTags.forEach(tag -> tagRepository.deleteById(tag.getId()));
+        deleteTags(resumeId);
 
         for(TagRequestDto tagRequest : resumeRequest.getTags()) {
             ResumeTag newResumeTag = ResumeTag.builder()
@@ -85,6 +78,24 @@ public class ResumeService {
         }
 
         return ResumeUpdateResponseDto.fromEntity(resume);
+    }
+
+    @Transactional
+    public void deleteResume(Long resumeId) {
+        Resume resume = checkResumeExists(resumeId);
+
+        resumeRepository.delete(resume);
+        deleteTags(resumeId);
+    }
+
+    private void deleteTags(Long resumeId) {
+        List<ResumeTag> savedResumeTags = resumeTagRepository.findByResumeId(resumeId);
+        List<Tag> savedTags = savedResumeTags.stream()
+                .map(resumeTag -> resumeTag.getTag())
+                .collect(Collectors.toList());
+
+        savedResumeTags.forEach(resumeTag -> resumeTagRepository.deleteByResumeId(resumeId));
+        savedTags.forEach(tag -> tagRepository.deleteById(tag.getId()));
     }
 
     private Resume checkResumeExists(Long resumeId) {
