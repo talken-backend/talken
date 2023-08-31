@@ -1,6 +1,6 @@
 package com.example.talkenbackend.resume.exception;
 
-import com.example.talkenbackend.global.exception.EntityNotFoundException;
+import com.example.talkenbackend.global.error.exception.EntityNotFoundException;
 
 public class ResumeNotFoundException extends EntityNotFoundException {
 

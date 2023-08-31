@@ -1,5 +1,6 @@
-package com.example.talkenbackend.global.exception;
+package com.example.talkenbackend.global.error;
 
+import com.example.talkenbackend.global.error.exception.CustomException;
 import com.example.talkenbackend.global.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

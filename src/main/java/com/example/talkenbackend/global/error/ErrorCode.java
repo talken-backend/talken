@@ -1,4 +1,4 @@
-package com.example.talkenbackend.global.exception;
+package com.example.talkenbackend.global.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,11 @@ public enum ErrorCode {
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "Entity를 찾을 수 없습니다."),
 
     // resume
-    NOT_INVALID_KEYWORD(HttpStatus.BAD_REQUEST, "키워드는 5개를 초과할 수 없습니다."),
+    INVALID_KEYWORD(HttpStatus.BAD_REQUEST, "키워드는 5개를 초과할 수 없습니다."),
+
+    // user
+    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "중복된 이메일이 존재합니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.")
     ;
 
     private final HttpStatus status;

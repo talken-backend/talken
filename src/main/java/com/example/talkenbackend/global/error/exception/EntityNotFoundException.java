@@ -1,4 +1,6 @@
-package com.example.talkenbackend.global.exception;
+package com.example.talkenbackend.global.error.exception;
+
+import com.example.talkenbackend.global.error.ErrorCode;
 
 public class EntityNotFoundException extends CustomException {
 

@@ -6,7 +6,7 @@ import com.example.talkenbackend.resume.domain.repository.ResumeRepository;
 import com.example.talkenbackend.resume.domain.repository.ResumeTagRepository;
 import com.example.talkenbackend.resume.dto.request.ResumeRequestDto;
 import com.example.talkenbackend.resume.dto.response.*;
-import com.example.talkenbackend.resume.exception.NotValidKeywordException;
+import com.example.talkenbackend.resume.exception.InvalidKeywordException;
 import com.example.talkenbackend.resume.exception.ResumeNotFoundException;
 import com.example.talkenbackend.tag.domain.Tag;
 import com.example.talkenbackend.tag.domain.repository.TagRepository;
@@ -38,7 +38,7 @@ public class ResumeService {
 
             if(resumeRequest.getTags().size() > 5) {
                 String keyword = resumeTag.getTag().getKeyword();
-                throw new NotValidKeywordException(keyword);
+                throw new InvalidKeywordException(keyword);
             }
 
             resumeTagRepository.save(resumeTag);
