@@ -2,7 +2,7 @@ package com.example.talkenbackend.resume.dto.request;
 
 import com.example.talkenbackend.resume.domain.Profile;
 import com.example.talkenbackend.resume.domain.Resume;
-import com.example.talkenbackend.tag.dto.TagCreateRequestDto;
+import com.example.talkenbackend.tag.dto.TagRequestDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ResumeRequestDto {
 
     private Profile profile;
-    private List<TagCreateRequestDto> tags;
+    private List<TagRequestDto> tags;
 
     public Resume toEntity() {
         return Resume.builder()

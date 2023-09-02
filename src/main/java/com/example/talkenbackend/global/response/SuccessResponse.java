@@ -15,12 +15,12 @@ public class SuccessResponse<T> {
     private String message;
     private T data;
 
-    public static <Void> ResponseEntity<SuccessResponse<Void>> toResponseEntity() {
+    public static <Void> ResponseEntity<SuccessResponse<Void>> toResponseEntity(String message) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.<Void>builder()
                         .code(HttpStatus.OK.value())
-                        .message(HttpStatus.OK.getReasonPhrase())
+                        .message(message)
                         .build());
     }
 

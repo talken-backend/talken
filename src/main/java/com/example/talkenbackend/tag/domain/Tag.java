@@ -1,5 +1,6 @@
 package com.example.talkenbackend.tag.domain;
 
+import com.example.talkenbackend.tag.dto.TagRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,5 +25,9 @@ public class Tag {
     @Builder
     public Tag(String keyword) {
         this.keyword = keyword;
+    }
+
+    public void update(TagRequestDto tagRequest) {
+        this.keyword = tagRequest.getKeyword();
     }
 }

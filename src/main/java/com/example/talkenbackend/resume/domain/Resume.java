@@ -1,5 +1,6 @@
 package com.example.talkenbackend.resume.domain;
 
+import com.example.talkenbackend.resume.dto.request.ResumeRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,6 +22,10 @@ public class Resume {
     @Builder
     public Resume(final Profile profile) {
         this.profile = profile;
+    }
+
+    public void update(ResumeRequestDto resumeRequest) {
+        this.profile = resumeRequest.getProfile();
     }
 
 }
