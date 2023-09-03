@@ -16,8 +16,8 @@ public class PortfolioRequestDto {
     private String title;
     private String role;
     private int memberNumber;
-    private String startedAt;
-    private String finishedAt;
+    private Date startedAt;
+    private Date finishedAt;
     private boolean isOngoing;
 
     private Retrospection retrospection;

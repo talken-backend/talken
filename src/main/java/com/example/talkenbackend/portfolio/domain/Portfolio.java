@@ -30,10 +30,12 @@ public class Portfolio {
     @Column(nullable = false)
     private int memberNumber;   // 팀원 수
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
-    private String startedAt;
+    private Date startedAt;
 
-    private String finishedAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date finishedAt;
 
     private boolean isOngoing;  // 진행중
 
@@ -45,7 +47,7 @@ public class Portfolio {
     private Resume resume;
 
     @Builder
-    public Portfolio(String title, String role, int memberNumber, String startedAt, String finishedAt, boolean isOngoing,
+    public Portfolio(String title, String role, int memberNumber, Date startedAt, Date finishedAt, boolean isOngoing,
                      final Retrospection retrospection, Resume resume) {
         this.title = title;
         this.role = role;

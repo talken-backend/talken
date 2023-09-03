@@ -58,7 +58,7 @@ public class ResumeService {
                 .map(ResumeTagResponseDto::fromEntity)
                 .collect(Collectors.toList());
 
-        return ResumeDetailResponseDto.fromEntity(resumeResponse, resumeTagResponse);
+        return ResumeDetailResponseDto.of(resumeResponse, resumeTagResponse);
     }
 
     @Transactional
