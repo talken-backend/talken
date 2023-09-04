@@ -3,6 +3,7 @@ package com.example.talkenbackend.portfolio.controller;
 import com.example.talkenbackend.global.response.SuccessResponse;
 import com.example.talkenbackend.portfolio.dto.request.PortfolioRequestDto;
 import com.example.talkenbackend.portfolio.dto.response.PortfolioCreateResponseDto;
+import com.example.talkenbackend.portfolio.dto.response.PortfolioDetailResponseDto;
 import com.example.talkenbackend.portfolio.dto.response.PortfolioListResponseDto;
 import com.example.talkenbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,11 @@ public class PortfolioController {
     @GetMapping(value = "/api/resumes/{resumeId}/portfolios")
     public ResponseEntity<SuccessResponse<PortfolioListResponseDto>> getPortfolioByResumeId(@PathVariable Long resumeId) {
         return SuccessResponse.toResponseEntity(portfolioService.getPortfolioByResumeId(resumeId));
+    }
+
+    @GetMapping(value = "/api/resumes/{resumeId}/portfolios/{portfolioId}")
+    public ResponseEntity<SuccessResponse<PortfolioDetailResponseDto>> getPortfolio(@PathVariable Long resumeId,
+                                                                                    @PathVariable Long portfolioId) {
+        return SuccessResponse.toResponseEntity(portfolioService.getPortfolio(resumeId, portfolioId));
     }
 }

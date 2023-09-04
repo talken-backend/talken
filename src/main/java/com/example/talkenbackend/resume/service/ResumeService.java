@@ -100,7 +100,7 @@ public class ResumeService {
 
     private Resume checkResumeExists(Long resumeId) {
         return resumeRepository.findById(resumeId).orElseThrow(
-                () -> new ResumeNotFoundException(resumeId)
+                () -> new ResumeNotFoundException()
         );
     }
 }
