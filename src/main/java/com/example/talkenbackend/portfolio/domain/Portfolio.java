@@ -1,5 +1,6 @@
 package com.example.talkenbackend.portfolio.domain;
 
+import com.example.talkenbackend.portfolio.dto.request.PortfolioRequestDto;
 import com.example.talkenbackend.resume.domain.Resume;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -57,5 +58,15 @@ public class Portfolio {
         this.isOngoing = isOngoing;
         this.retrospection = retrospection;
         this.resume = resume;
+    }
+
+    public void update(PortfolioRequestDto portfolioRequest) {
+        this.title = portfolioRequest.getTitle();
+        this.role = portfolioRequest.getRole();
+        this.memberNumber = portfolioRequest.getMemberNumber();
+        this.startedAt = portfolioRequest.getStartedAt();
+        this.finishedAt = portfolioRequest.getFinishedAt();
+        this.isOngoing = portfolioRequest.isOngoing();
+        this.retrospection = portfolioRequest.getRetrospection();
     }
 }

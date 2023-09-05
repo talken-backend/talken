@@ -26,9 +26,8 @@ public class PortfolioService {
     private final ResumeRepository resumeRepository;
 
     public PortfolioCreateResponseDto createPortfolio(Long resumeId, PortfolioRequestDto portfolioRequest) {
-        Resume resume = resumeRepository.findById(resumeId).orElseThrow(
-                () -> new ResumeNotFoundException()
-        );
+        Resume resume = checkResumeExists(resumeId);
+
         Portfolio portfolio = portfolioRequest.toEntity(resume);
         portfolioRepository.save(portfolio);
 
@@ -47,9 +46,7 @@ public class PortfolioService {
 
     @Transactional(readOnly = true)
     public PortfolioDetailResponseDto getPortfolio(Long resumeId, Long portfolioId) {
-        Resume resume = resumeRepository.findById(resumeId).orElseThrow(
-                () -> new ResumeNotFoundException()
-        );
+        checkResumeExists(resumeId);
 
         Portfolio portfolio = portfolioRepository.findById(portfolioId).orElseThrow(
                 () -> new PortfolioNotFoundException()
@@ -57,4 +54,23 @@ public class PortfolioService {
 
         return PortfolioDetailResponseDto.fromEntity(portfolio);
     }
+
+    @Transactional
+    public PortfolioDetailResponseDto updatePortfolio(Long resumeId, Long portfolioId, PortfolioRequestDto portfolioRequest) {
+        checkResumeExists(resumeId);
+
+        Portfolio portfolio = portfolioRepository.findById(portfolioId).orElseThrow(
+                () -> new PortfolioNotFoundException()
+        );
+        portfolio.update(portfolioRequest);
+
+        return PortfolioDetailResponseDto.fromEntity(portfolio);
+    }
+
+    private Resume checkResumeExists(Long resumeId) {
+        return resumeRepository.findById(resumeId).orElseThrow(
+                () -> new ResumeNotFoundException()
+        );
+    }
+
 }

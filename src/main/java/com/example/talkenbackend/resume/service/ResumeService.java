@@ -62,7 +62,7 @@ public class ResumeService {
     }
 
     @Transactional
-    public ResumeUpdateResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest) {
+    public ResumeResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest) {
         Resume resume = checkResumeExists(resumeId);
         resume.update(resumeRequest);
 
@@ -77,7 +77,7 @@ public class ResumeService {
             resumeTagRepository.save(newResumeTag);
         }
 
-        return ResumeUpdateResponseDto.fromEntity(resume);
+        return ResumeResponseDto.fromEntity(resume);
     }
 
     @Transactional

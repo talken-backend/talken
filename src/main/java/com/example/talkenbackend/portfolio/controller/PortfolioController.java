@@ -5,6 +5,7 @@ import com.example.talkenbackend.portfolio.dto.request.PortfolioRequestDto;
 import com.example.talkenbackend.portfolio.dto.response.PortfolioCreateResponseDto;
 import com.example.talkenbackend.portfolio.dto.response.PortfolioDetailResponseDto;
 import com.example.talkenbackend.portfolio.dto.response.PortfolioListResponseDto;
+import com.example.talkenbackend.portfolio.dto.response.PortfolioResponseDto;
 import com.example.talkenbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,12 @@ public class PortfolioController {
     public ResponseEntity<SuccessResponse<PortfolioDetailResponseDto>> getPortfolio(@PathVariable Long resumeId,
                                                                                     @PathVariable Long portfolioId) {
         return SuccessResponse.toResponseEntity(portfolioService.getPortfolio(resumeId, portfolioId));
+    }
+
+    @PutMapping(value = "/api/resumes/{resumeId}/portfolios/{portfolioId}")
+    public ResponseEntity<SuccessResponse<PortfolioDetailResponseDto>> updatePortfolio(@PathVariable Long resumeId,
+                                                                                 @PathVariable Long portfolioId,
+                                                                                 @RequestBody PortfolioRequestDto portfolioRequest) {
+        return SuccessResponse.toResponseEntity("포트폴리오 업데이트 성공", portfolioService.updatePortfolio(resumeId, portfolioId, portfolioRequest));
     }
 }
