@@ -36,8 +36,15 @@ public class PortfolioController {
 
     @PutMapping(value = "/api/resumes/{resumeId}/portfolios/{portfolioId}")
     public ResponseEntity<SuccessResponse<PortfolioDetailResponseDto>> updatePortfolio(@PathVariable Long resumeId,
-                                                                                 @PathVariable Long portfolioId,
-                                                                                 @RequestBody PortfolioRequestDto portfolioRequest) {
+                                                                                       @PathVariable Long portfolioId,
+                                                                                       @RequestBody PortfolioRequestDto portfolioRequest) {
         return SuccessResponse.toResponseEntity("포트폴리오 업데이트 성공", portfolioService.updatePortfolio(resumeId, portfolioId, portfolioRequest));
+    }
+
+    @DeleteMapping(value = "/api/resumes/{resumeId}/portfolios/{portfolioId}")
+    public ResponseEntity<SuccessResponse<Void>> deletePortfolio(@PathVariable Long resumeId,
+                                                                 @PathVariable Long portfolioId) {
+        portfolioService.deletePortfolio(resumeId, portfolioId);
+        return SuccessResponse.toResponseEntity("포트폴리오 삭제 성공");
     }
 }

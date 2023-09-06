@@ -67,6 +67,16 @@ public class PortfolioService {
         return PortfolioDetailResponseDto.fromEntity(portfolio);
     }
 
+    @Transactional
+    public void deletePortfolio(Long resumeId, Long portfolioId) {
+        checkResumeExists(resumeId);
+
+        Portfolio portfolio = portfolioRepository.findById(portfolioId).orElseThrow(
+                () -> new PortfolioNotFoundException()
+        );
+        portfolioRepository.delete(portfolio);
+    }
+
     private Resume checkResumeExists(Long resumeId) {
         return resumeRepository.findById(resumeId).orElseThrow(
                 () -> new ResumeNotFoundException()
