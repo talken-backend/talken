@@ -1,5 +1,6 @@
 package com.example.talkenbackend.user.domain;
 
+import com.example.talkenbackend.global.domain.BaseTime;
 import com.example.talkenbackend.tag.domain.Tag;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Entity
-public class User {
+public class User extends BaseTime {
     @Id
     @GeneratedValue
     private Long id;
