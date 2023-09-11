@@ -58,11 +58,11 @@ public class ResumeService {
                 .map(ResumeTagResponseDto::fromEntity)
                 .collect(Collectors.toList());
 
-        return ResumeDetailResponseDto.fromEntity(resumeResponse, resumeTagResponse);
+        return ResumeDetailResponseDto.of(resumeResponse, resumeTagResponse);
     }
 
     @Transactional
-    public ResumeUpdateResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest) {
+    public ResumeResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest) {
         Resume resume = checkResumeExists(resumeId);
         resume.update(resumeRequest);
 
@@ -77,7 +77,7 @@ public class ResumeService {
             resumeTagRepository.save(newResumeTag);
         }
 
-        return ResumeUpdateResponseDto.fromEntity(resume);
+        return ResumeResponseDto.fromEntity(resume);
     }
 
     @Transactional
@@ -100,7 +100,7 @@ public class ResumeService {
 
     private Resume checkResumeExists(Long resumeId) {
         return resumeRepository.findById(resumeId).orElseThrow(
-                () -> new ResumeNotFoundException(resumeId)
+                () -> new ResumeNotFoundException()
         );
     }
 }

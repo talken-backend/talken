@@ -21,7 +21,7 @@ public class ResumeDetailResponseDto {
         this.resumeTagResponse = resumeTagResponse;
     }
 
-    public static ResumeDetailResponseDto fromEntity(ResumeResponseDto resumeResponse, List<ResumeTagResponseDto> resumeTagResponse) {
+    public static ResumeDetailResponseDto of(ResumeResponseDto resumeResponse, List<ResumeTagResponseDto> resumeTagResponse) {
         return ResumeDetailResponseDto.builder()
                 .resumeResponse(resumeResponse)
                 .resumeTagResponse(resumeTagResponse)

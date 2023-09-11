@@ -1,4 +1,4 @@
-package com.example.talkenbackend.config;
+package com.example.talkenbackend.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
