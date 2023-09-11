@@ -14,13 +14,18 @@ public class ResumeResponseDto {
     private String field;
     private String position;
     private String introduction;
+    private boolean emailStatus;
+    private boolean phoneStatus;
 
     @Builder
-    public ResumeResponseDto(String image, String field, String position, String introduction) {
+    public ResumeResponseDto(String image, String field, String position, String introduction,
+                             boolean emailStatus, boolean phoneStatus) {
         this.image = image;
         this.field = field;
         this.position = position;
         this.introduction = introduction;
+        this.emailStatus = emailStatus;
+        this.phoneStatus = phoneStatus;
     }
 
     public static ResumeResponseDto fromEntity(Resume resume) {
@@ -29,6 +34,8 @@ public class ResumeResponseDto {
                 .field(resume.getProfile().getField())
                 .position(resume.getProfile().getPosition())
                 .introduction(resume.getProfile().getIntroduction())
+                .emailStatus(resume.getProfile().isEmailStatus())
+                .phoneStatus(resume.getProfile().isPhoneStatus())
                 .build();
     }
 }
