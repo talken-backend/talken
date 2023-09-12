@@ -17,9 +17,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Profile {
 
-    @Column
-    private String image;
-
     @Column(nullable = false)
     private String field;   // 분야
 
@@ -34,9 +31,8 @@ public class Profile {
     private boolean phoneStatus = false;
 
 
-    public Profile(final String image, final String field, final String position, final String introduction,
+    public Profile(final String field, final String position, final String introduction,
                    final boolean emailStatus, final boolean phoneStatus) {
-        this.image = image;
         this.field = field;
         this.position = position;
         this.introduction = introduction;

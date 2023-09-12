@@ -9,6 +9,9 @@ import com.example.talkenbackend.resume.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,9 +19,10 @@ public class ResumeController {
 
     private final ResumeService resumeService;
 
-    @PostMapping(value = "/api/resumes")
-    public ResponseEntity<SuccessResponse<ResumeCreateResponseDto>> createResume(@RequestBody ResumeRequestDto resumeRequest) {
-        return SuccessResponse.toResponseEntity("이력서 생성 성공", resumeService.createResume(resumeRequest));
+    @PostMapping(value = "/api/resumes", consumes = {"multipart/form-data"})
+    public ResponseEntity<SuccessResponse<ResumeCreateResponseDto>> createResume(@RequestPart(name = "data") ResumeRequestDto resumeRequest,
+                                                                                 @RequestPart(name = "file", required = false) List<MultipartFile> files) {
+        return SuccessResponse.toResponseEntity("이력서 생성 성공", resumeService.createResume(resumeRequest, files));
     }
 
     @GetMapping(value = "/api/resumes/{resumeId}")

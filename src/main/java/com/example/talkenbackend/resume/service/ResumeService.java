@@ -1,7 +1,12 @@
 package com.example.talkenbackend.resume.service;
 
+import com.example.talkenbackend.global.util.AwsS3Uploader;
+import com.example.talkenbackend.image.domain.Image;
+import com.example.talkenbackend.image.domain.repository.ImageRepository;
+import com.example.talkenbackend.resume.domain.ProfileImage;
 import com.example.talkenbackend.resume.domain.Resume;
 import com.example.talkenbackend.resume.domain.ResumeTag;
+import com.example.talkenbackend.resume.domain.repository.ProfileImageRepository;
 import com.example.talkenbackend.resume.domain.repository.ResumeRepository;
 import com.example.talkenbackend.resume.domain.repository.ResumeTagRepository;
 import com.example.talkenbackend.resume.dto.request.ResumeRequestDto;
@@ -14,6 +19,7 @@ import com.example.talkenbackend.tag.dto.TagRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +31,14 @@ public class ResumeService {
     private final ResumeRepository resumeRepository;
     private final ResumeTagRepository resumeTagRepository;
     private final TagRepository tagRepository;
+    private final ImageRepository imageRepository;
+    private final ProfileImageRepository profileImageRepository;
 
-    public ResumeCreateResponseDto createResume(ResumeRequestDto resumeRequest) {
+    private final AwsS3Uploader s3Uploader;
+
+    private final String dirName = "/profile";
+
+    public ResumeCreateResponseDto createResume(ResumeRequestDto resumeRequest, List<MultipartFile> files) {
         Resume resume = resumeRequest.toEntity();
         resumeRepository.save(resume);
 
@@ -43,6 +55,21 @@ public class ResumeService {
 
             resumeTagRepository.save(resumeTag);
         }
+
+        List<String> imageUrlList = s3Uploader.uploadFiles(files, dirName);
+        List<Image> newImageList = imageUrlList.stream()
+                .map(Image::new)
+                .collect(Collectors.toList());
+
+        for(Image image : newImageList) {
+            imageRepository.save(image);
+            ProfileImage profileImage = ProfileImage.builder()
+                    .resume(resume)
+                    .image(image)
+                    .build();
+            profileImageRepository.save(profileImage);
+        }
+
         return ResumeCreateResponseDto.fromEntity(resume);
     }
 
@@ -58,7 +85,12 @@ public class ResumeService {
                 .map(ResumeTagResponseDto::fromEntity)
                 .collect(Collectors.toList());
 
-        return ResumeDetailResponseDto.of(resumeResponse, resumeTagResponse);
+        List<ProfileImage> profileImageList = profileImageRepository.findByResumeId(resumeId);
+        List<ProfileImageResponseDto> profileImageResponse = profileImageList.stream()
+                .map(ProfileImageResponseDto::fromEntity)
+                .collect(Collectors.toList());
+
+        return ResumeDetailResponseDto.of(resumeResponse, resumeTagResponse, profileImageResponse);
     }
 
     @Transactional
