@@ -10,6 +10,9 @@ import com.example.talkenbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,10 +20,11 @@ public class PortfolioController {
 
     private final PortfolioService portfolioService;
 
-    @PostMapping(value = "/api/resumes/{resumeId}/portfolios")
+    @PostMapping(value = "/api/resumes/{resumeId}/portfolios", consumes = {"multipart/form-data"})
     public ResponseEntity<SuccessResponse<PortfolioCreateResponseDto>> createPortfolio(@PathVariable Long resumeId,
-                                                                                       @RequestBody PortfolioRequestDto portfolioRequest) {
-        return SuccessResponse.toResponseEntity("포트폴리오 생성 성공", portfolioService.createPortfolio(resumeId, portfolioRequest));
+                                                                                       @RequestPart(name = "data") PortfolioRequestDto portfolioRequest,
+                                                                                       @RequestPart(name = "file", required = false) List<MultipartFile> files) {
+        return SuccessResponse.toResponseEntity("포트폴리오 생성 성공", portfolioService.createPortfolio(resumeId, portfolioRequest, files));
     }
 
     @GetMapping(value = "/api/resumes/{resumeId}/portfolios")
@@ -35,10 +39,11 @@ public class PortfolioController {
     }
 
     @PutMapping(value = "/api/resumes/{resumeId}/portfolios/{portfolioId}")
-    public ResponseEntity<SuccessResponse<PortfolioDetailResponseDto>> updatePortfolio(@PathVariable Long resumeId,
-                                                                                       @PathVariable Long portfolioId,
-                                                                                       @RequestBody PortfolioRequestDto portfolioRequest) {
-        return SuccessResponse.toResponseEntity("포트폴리오 업데이트 성공", portfolioService.updatePortfolio(resumeId, portfolioId, portfolioRequest));
+    public ResponseEntity<SuccessResponse<PortfolioResponseDto>> updatePortfolio(@PathVariable Long resumeId,
+                                                                                 @PathVariable Long portfolioId,
+                                                                                 @RequestPart(name = "data") PortfolioRequestDto portfolioRequest,
+                                                                                 @RequestPart(name = "file", required = false) List<MultipartFile> files) {
+        return SuccessResponse.toResponseEntity("포트폴리오 업데이트 성공", portfolioService.updatePortfolio(resumeId, portfolioId, portfolioRequest, files));
     }
 
     @DeleteMapping(value = "/api/resumes/{resumeId}/portfolios/{portfolioId}")

@@ -36,7 +36,7 @@ public class ResumeService {
 
     private final AwsS3Uploader s3Uploader;
 
-    private final String dirName = "/profile";
+    private final String dirName = "profile";
 
     public ResumeCreateResponseDto createResume(ResumeRequestDto resumeRequest, List<MultipartFile> files) {
         Resume resume = resumeRequest.toEntity();
