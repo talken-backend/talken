@@ -23,6 +23,7 @@ public class SignupRequestDto {
                 .password(password)
                 .passwordCheck(passwordCheck)
                 .phone(phone)
+                .authority(authority)
                 .build();
     }
 }

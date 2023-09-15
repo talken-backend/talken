@@ -1,5 +1,6 @@
 package com.example.talkenbackend.resume.service;
 
+import com.example.talkenbackend.global.security.UserDetailsImpl;
 import com.example.talkenbackend.global.util.AwsS3Uploader;
 import com.example.talkenbackend.image.domain.Image;
 import com.example.talkenbackend.image.domain.repository.ImageRepository;
@@ -16,6 +17,8 @@ import com.example.talkenbackend.resume.exception.ResumeNotFoundException;
 import com.example.talkenbackend.tag.domain.Tag;
 import com.example.talkenbackend.tag.domain.repository.TagRepository;
 import com.example.talkenbackend.tag.dto.TagRequestDto;
+import com.example.talkenbackend.user.domain.User;
+import com.example.talkenbackend.user.exception.UserNotAuthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,8 +41,9 @@ public class ResumeService {
 
     private final String dirName = "profile";
 
-    public ResumeCreateResponseDto createResume(ResumeRequestDto resumeRequest, List<MultipartFile> files) {
-        Resume resume = resumeRequest.toEntity();
+    public ResumeCreateResponseDto createResume(ResumeRequestDto resumeRequest, List<MultipartFile> files, UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        Resume resume = resumeRequest.toEntity(user);
         resumeRepository.save(resume);
 
         for(TagRequestDto tagRequest : resumeRequest.getTags()) {
@@ -94,8 +98,11 @@ public class ResumeService {
     }
 
     @Transactional
-    public ResumeResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest) {
+    public ResumeResponseDto updateResume(Long resumeId, ResumeRequestDto resumeRequest, UserDetailsImpl userDetails) {
         Resume resume = checkResumeExists(resumeId);
+        if(!validateUser(userDetails.getUser(), resume)) {
+            throw new UserNotAuthorizedException();
+        }
         resume.update(resumeRequest);
 
         //TODO: 리팩토링할 것
@@ -113,8 +120,11 @@ public class ResumeService {
     }
 
     @Transactional
-    public void deleteResume(Long resumeId) {
+    public void deleteResume(Long resumeId, UserDetailsImpl userDetails) {
         Resume resume = checkResumeExists(resumeId);
+        if(!validateUser(userDetails.getUser(), resume)) {
+            throw new UserNotAuthorizedException();
+        }
 
         resumeRepository.delete(resume);
         deleteTags(resumeId);
@@ -128,6 +138,10 @@ public class ResumeService {
 
         savedResumeTags.forEach(resumeTag -> resumeTagRepository.deleteByResumeId(resumeId));
         savedTags.forEach(tag -> tagRepository.deleteById(tag.getId()));
+    }
+
+    private Boolean validateUser(User user, Resume resume) {
+        return user.getEmail().equals(resume.getUser().getEmail());
     }
 
     private Resume checkResumeExists(Long resumeId) {

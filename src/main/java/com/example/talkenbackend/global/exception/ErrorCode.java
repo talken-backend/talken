@@ -13,6 +13,7 @@ public enum ErrorCode {
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "접근이 거부되었습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "내부 서버 에러입니다."),
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "Entity를 찾을 수 없습니다."),
+    NOT_AUTHORIZED(HttpStatus.BAD_REQUEST, "권한이 없습니다."),
 
     // resume
     INVALID_KEYWORD(HttpStatus.BAD_REQUEST, "키워드는 5개를 초과할 수 없습니다."),

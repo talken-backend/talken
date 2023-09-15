@@ -1,5 +1,6 @@
 package com.example.talkenbackend.user.domain;
 
+import com.example.talkenbackend.resume.domain.Resume;
 import com.example.talkenbackend.tag.domain.Tag;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -46,6 +47,9 @@ public class User {
     private String profilePath; // 프로필 사진 경로
     @OneToMany
     private List<Tag> tags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Resume> resumes = new ArrayList<>();
 
     @Builder
     public User(String email, String username, String password, String passwordCheck, String phone, UserAuthority authority) {
