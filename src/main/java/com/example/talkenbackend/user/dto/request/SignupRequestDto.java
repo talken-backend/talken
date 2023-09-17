@@ -3,6 +3,7 @@ package com.example.talkenbackend.user.dto.request;
 import com.example.talkenbackend.user.domain.User;
 import com.example.talkenbackend.user.domain.UserAuthority;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,15 @@ public class SignupRequestDto {
     private String password;
     private String passwordCheck;
     private String phone;
+
+    @Builder
+    public SignupRequestDto(String email, String username, String password, String passwordCheck, String phone) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.passwordCheck = passwordCheck;
+        this.phone = phone;
+    }
 
     public User toEntity(String password, UserAuthority authority) {
         return User.builder()
