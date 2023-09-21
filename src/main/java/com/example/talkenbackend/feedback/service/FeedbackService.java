@@ -4,7 +4,9 @@ import com.example.talkenbackend.feedback.domain.Feedback;
 import com.example.talkenbackend.feedback.dto.request.FeedbackRequestDto;
 import com.example.talkenbackend.feedback.dto.response.FeedbackResponseDto;
 import com.example.talkenbackend.feedback.exception.FeedbackNotFoundException;
+import com.example.talkenbackend.feedback.repository.FeedbackQueryDslRepository;
 import com.example.talkenbackend.feedback.repository.FeedbackRepository;
+import com.example.talkenbackend.relation.service.RelationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +17,11 @@ import java.util.stream.Collectors;
 import static com.example.talkenbackend.feedback.dto.response.FeedbackResponseDto.fromEntity;
 
 @RequiredArgsConstructor
-
 @Service
 public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
+    private final FeedbackQueryDslRepository feedbackQueryDslRepository;
+    private final RelationService relationService;
 
     public FeedbackResponseDto getFeedback(Long feedbackId) throws Exception {
         Feedback feedback = feedbackRepository.findById(feedbackId)
@@ -38,10 +41,19 @@ public class FeedbackService {
 
     @Transactional
     public void deleteFeedback(Long feedbackId) {
+        Feedback feedback = feedbackRepository.findById(feedbackId).orElseThrow();
         feedbackRepository.deleteById(feedbackId);
+
+        List<Feedback> feedbacks = feedbackQueryDslRepository.findByMentorIdAndMenteeId(
+                feedback.getMentorId(), feedback.getMenteeId());
+        if (feedbacks.size() == 0) { // 멘토가 해당 멘티에 남긴 피드백이 없으면
+            relationService.unSetRelation(feedback.getMenteeId(), feedback.getMentorId());
+        }
     }
 
+    @Transactional
     public FeedbackResponseDto createFeedback(FeedbackRequestDto dto) {
+        relationService.setRelation(dto.getMenteeId(), dto.getMentorId());
         return fromEntity(feedbackRepository.save(dto.toEntity()));
     }
 
