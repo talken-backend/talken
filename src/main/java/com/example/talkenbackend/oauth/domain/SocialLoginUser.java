@@ -1,5 +1,6 @@
 package com.example.talkenbackend.oauth.domain;
 
+import com.example.talkenbackend.global.domain.BaseTime;
 import com.example.talkenbackend.oauth.dto.enums.OAuthProvider;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class SocialLoginUser {
+public class SocialLoginUser extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

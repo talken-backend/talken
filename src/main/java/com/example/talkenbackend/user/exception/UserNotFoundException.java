@@ -1,7 +1,6 @@
 package com.example.talkenbackend.user.exception;
 
-import com.example.talkenbackend.global.exception.EntityNotFoundException;
-import com.example.talkenbackend.global.exception.ErrorCode;
+import com.example.talkenbackend.global.error.exception.EntityNotFoundException;
 
 public class UserNotFoundException extends EntityNotFoundException {
     public UserNotFoundException() {

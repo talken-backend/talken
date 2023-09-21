@@ -1,6 +1,6 @@
-package com.example.talkenbackend.global.exception;
+package com.example.talkenbackend.global.error.exception;
 
-import lombok.AllArgsConstructor;
+import com.example.talkenbackend.global.error.ErrorCode;
 import lombok.Getter;
 
 @Getter

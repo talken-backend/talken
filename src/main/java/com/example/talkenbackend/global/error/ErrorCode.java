@@ -1,4 +1,4 @@
-package com.example.talkenbackend.global.exception;
+package com.example.talkenbackend.global.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

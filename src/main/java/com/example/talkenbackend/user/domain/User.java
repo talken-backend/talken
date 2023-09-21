@@ -1,5 +1,6 @@
 package com.example.talkenbackend.user.domain;
 
+import com.example.talkenbackend.global.domain.BaseTime;
 import com.example.talkenbackend.resume.domain.Resume;
 import com.example.talkenbackend.tag.domain.Tag;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseTime {
 
     @Id
     @GeneratedValue
