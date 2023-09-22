@@ -1,6 +1,7 @@
 package com.example.talkenbackend.portfolio.exeption;
 
-import com.example.talkenbackend.global.exception.EntityNotFoundException;
+
+import com.example.talkenbackend.global.error.exception.EntityNotFoundException;
 
 public class PortfolioNotFoundException extends EntityNotFoundException {
 
