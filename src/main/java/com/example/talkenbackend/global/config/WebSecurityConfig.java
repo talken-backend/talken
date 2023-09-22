@@ -59,10 +59,10 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
                 .anyRequest().authenticated();
 
-        http
-                .exceptionHandling()
-                .and()
-                .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        //http
+        //        .exceptionHandling()
+        //        .and()
+        //        .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
