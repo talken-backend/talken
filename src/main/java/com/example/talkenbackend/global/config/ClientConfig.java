@@ -1,4 +1,4 @@
-package com.example.talkenbackend.config;
+package com.example.talkenbackend.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

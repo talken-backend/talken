@@ -7,6 +7,7 @@ import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,6 @@ import java.util.List;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Profile {
-
-    @Column
-    private String image;
 
     @Column(nullable = false)
     private String field;   // 분야
@@ -28,11 +26,17 @@ public class Profile {
     @Column(columnDefinition = "TEXT")
     private String introduction;
 
+    private boolean emailStatus = true;
 
-    public Profile(final String image, final String field, final String position, final String introduction) {
-        this.image = image;
+    private boolean phoneStatus = false;
+
+
+    public Profile(final String field, final String position, final String introduction,
+                   final boolean emailStatus, final boolean phoneStatus) {
         this.field = field;
         this.position = position;
         this.introduction = introduction;
+        this.emailStatus = emailStatus;
+        this.phoneStatus = phoneStatus;
     }
 }

@@ -14,17 +14,22 @@ public class ResumeDetailResponseDto {
     private ResumeResponseDto resumeResponse;
     //TODO: UserResponseDto 추가
     private List<ResumeTagResponseDto> resumeTagResponse;
+    private List<ProfileImageResponseDto> profileImageResponse;
 
     @Builder
-    public ResumeDetailResponseDto(ResumeResponseDto resumeResponse, List<ResumeTagResponseDto> resumeTagResponse) {
+    public ResumeDetailResponseDto(ResumeResponseDto resumeResponse, List<ResumeTagResponseDto> resumeTagResponse,
+                                   List<ProfileImageResponseDto> profileImageResponse) {
         this.resumeResponse = resumeResponse;
         this.resumeTagResponse = resumeTagResponse;
+        this.profileImageResponse = profileImageResponse;
     }
 
-    public static ResumeDetailResponseDto fromEntity(ResumeResponseDto resumeResponse, List<ResumeTagResponseDto> resumeTagResponse) {
+    public static ResumeDetailResponseDto of(ResumeResponseDto resumeResponse, List<ResumeTagResponseDto> resumeTagResponse,
+                                             List<ProfileImageResponseDto> profileImageResponse) {
         return ResumeDetailResponseDto.builder()
                 .resumeResponse(resumeResponse)
                 .resumeTagResponse(resumeTagResponse)
+                .profileImageResponse(profileImageResponse)
                 .build();
     }
 }
