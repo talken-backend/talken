@@ -17,17 +17,16 @@ import static com.example.talkenbackend.global.response.SuccessResponse.toRespon
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth")
 public class AuthController {
     private final KakaoLoginServiceImpl kakaoLoginService;
     private final NaverLoginServiceImpl naverLoginService;
 
-    @PostMapping("/kakao")
+    @PostMapping("/oauth/kakaoCallback")
     public ResponseEntity<SuccessResponse<ResponseEntity<AuthTokens>>> loginKakao(@RequestBody KakaoLoginParams params) {
         return toResponseEntity("카카오 로그인 성공", ResponseEntity.ok(kakaoLoginService.login(params)));
     }
 
-    @PostMapping("/naver")
+    @PostMapping("/oauth/naverCallback")
     public ResponseEntity<SuccessResponse<ResponseEntity<AuthTokens>>> loginNaver(@RequestBody NaverLoginParams params) {
         return toResponseEntity("네이버 로그인 성공", ResponseEntity.ok(naverLoginService.login(params)));
     }
