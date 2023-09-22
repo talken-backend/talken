@@ -2,10 +2,10 @@ package com.example.talkenbackend.user.dto.request;
 
 import com.example.talkenbackend.user.domain.User;
 import com.example.talkenbackend.user.domain.UserAuthority;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignupRequestDto {

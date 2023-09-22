@@ -33,7 +33,7 @@ public class UserService {
         String password = passwordEncoder.encode(signupRequest.getPassword());
 
         User user = signupRequest.toEntity(password, authority);
-        userRepository.save(user);
+         userRepository.save(user);
     }
 
     public String login(LoginRequestDto loginRequest) {
