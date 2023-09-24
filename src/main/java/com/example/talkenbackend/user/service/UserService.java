@@ -13,6 +13,7 @@ import com.example.talkenbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -26,9 +27,6 @@ public class UserService {
             throw new DuplicateEmailException();
         });
 
-        if(!signupRequest.getPassword().equals(signupRequest.getPasswordCheck())) {
-            throw new InvalidPasswordException();
-        }
         UserAuthority authority = UserAuthority.USER;
         String password = passwordEncoder.encode(signupRequest.getPassword());
 

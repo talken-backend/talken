@@ -54,8 +54,6 @@ public class NaverLoginServiceImpl implements OAuthLoginService {
                 .email(oAuthInfoResponse.getEmail())
                 .username(oAuthInfoResponse.getName())
                 .password("social")
-                .passwordCheck("social")
-                .phone(oAuthInfoResponse.getPhoneNumber()) // 카카오에서 허가가 필요해 널값으로 들어온다.
                 .build();
         userRepository.findByEmail(signupRequest.getEmail()).ifPresent(user -> {
             throw new DuplicateEmailException();

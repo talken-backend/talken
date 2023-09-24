@@ -32,14 +32,11 @@ public class User extends BaseTime {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String passwordCheck;
-
-    @Column(nullable = false)
-    private String phone;
-
     @Enumerated(value = EnumType.STRING)
     private UserAuthority authority;
+
+    @Enumerated(value = EnumType.STRING)
+    private UserRole role;
 
     private String introCaption; // 소개글
     private String category; // 직무 카테고리
@@ -53,12 +50,11 @@ public class User extends BaseTime {
     private List<Resume> resumes = new ArrayList<>();
 
     @Builder
-    public User(String email, String username, String password, String passwordCheck, String phone, UserAuthority authority) {
+    public User(String email, String username, String password, UserAuthority authority, UserRole role) {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.passwordCheck = passwordCheck;
-        this.phone = phone;
         this.authority = authority;
+        this.role = role;
     }
 }

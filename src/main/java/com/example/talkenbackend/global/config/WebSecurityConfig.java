@@ -53,16 +53,13 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/oauth/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
                 .anyRequest().authenticated();
 
-        //http
-        //        .exceptionHandling()
-        //        .and()
-        //        .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        http
+                .exceptionHandling()
+                .and()
+                .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
